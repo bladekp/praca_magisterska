@@ -1,0 +1,108 @@
+\documentclass[12pt]{article}
+    \input{zalaczniki/ustawienia/preambula_pakiety.tex}
+    \input{zalaczniki/ustawienia/preambula_ustawienia.tex}
+    \title{Wykorzystanie infrastruktury internetu rzeczy \\ oraz bezzałogowych statków powietrznych \\ przy wspomaganiu prowadzzenia akcji ratunkowej}
+    \author{Piotr Błądek}
+    %polecenia zdefiniowane w pakiecie strona_tytulowa.sty
+    \uczelnia{POLITECHNIKA WARSZAWSKA}
+    \instytut{Wydział Elektryczny \\ Instytut Elektrotechniki Teoretycznej i Systemów Informacyjno-Pomiarowych \\ Zakład Konstrukcji Urządzeń Elektrycznych}
+    \promotor{dr hab. inż. Piotr Biczel}
+    \praca{Kierujący pracą: }
+    \rok{2017}
+    \usepackage{indentfirst}
+\begin{document}
+    \renewcommand{\figurename}{Rys.}    %musi byc pod \begin{document}, bo w~tym miejscu pakiet 'babel' narzuca swoje ustawienia
+    \renewcommand{\tablename}{Tab.}     %j.w.
+    \pagenumbering{roman}               %numeracja stron: rzymska
+    \thispagestyle{empty}               %na tej stronie: brak numeru
+    \stronatytulowa                     %strona tytułowa tworzona przez pakiet strona_tytulowa.tex
+
+    \null\newpage
+
+    %\input{zalaczniki/tekstowe/oswiadczenieDyplomant.tex}
+    \input{zalaczniki/tekstowe/oswiadczenie.tex}
+    \newpage
+    \input{zalaczniki/tekstowe/streszczeniePL.tex}
+    \newpage
+    \input{zalaczniki/tekstowe/streszczenieEN.tex}
+    \newpage
+    
+    %podziękowania
+    \newpage
+    ~   %potrzebne dla \vfill
+    \vfill
+    {\sffamily
+    \begin{flushright}
+        \begin{tabular}{l}
+        Podziękowania.
+	\end{tabular}
+    \end{flushright}
+    }
+    \vskip0.5in
+    \thispagestyle{empty}
+    \newpage
+    %koniec podziękowań
+    
+    %formatowanie spisu treści i~nagłówków
+    \renewcommand{\cftbeforesecskip}{8pt}
+    \renewcommand{\cftsecafterpnum}{\vskip 8pt}
+    \renewcommand{\cftparskip}{3pt}
+    \renewcommand{\cfttoctitlefont}{\Large\bfseries\sffamily}
+    \renewcommand{\cftsecfont}{\bfseries\sffamily}
+    \renewcommand{\cftsubsecfont}{\sffamily}
+    \renewcommand{\cftsubsubsecfont}{\sffamily}
+    \renewcommand{\cftparafont}{\sffamily}
+    %koniec formatowania spisu treści i nagłówków
+    \setcounter{tocdepth}{2}
+    \tableofcontents    %spis treści
+    \newpage
+
+    \input{zalaczniki/tekstowe/wykaz_skrotow.tex}
+    \newpage
+
+    %koniec spisu rysunków i~tablic
+
+    %przeniesienie wartości licznika stron na strony numerowane innym stylem (arabic)
+    \newcounter{licznikStron}
+    \setcounter{licznikStron}{\value{page}}
+    \pagenumbering{arabic}
+    \setcounter{page}{\value{licznikStron}}
+    %koniec przeniesienia...
+    %treść główna dokumentu
+    \input{tresc_dokumentu.tex}
+    \newpage
+    %koniec treści głównej dokumentu
+
+    %bibliografia
+    \input{zalaczniki/tekstowe/bibliografia.tex}                       %polecenie programu WinEdt, włącza plik do drzewa 'projektu'
+    \bibliographystyle{unsrtnat}                    %styl bibliografii: w kolejności cytowania, zrozumiały dla pakietu hyperref.sty
+    \addcontentsline{toc}{section}{Literatura}      %musi być wyżej niż \bibliography{bibliografia}, żeby w~spisie treści był właściwy numer strony
+    \bibliography{bibliografia}
+    %koniec bibliografii
+
+
+    %spis rysunków i~tablic
+    %format spisu treści dotyczy tylko tych spisów, które są poniżej
+    \hypersetup{linkcolor=black}
+    \renewcommand{\cftparskip}{3pt}
+    \clearpage
+    \renewcommand{\cftloftitlefont}{\Large\bfseries\sffamily}
+    \listoffigures
+    \addcontentsline{toc}{section}{Spis rysunków}
+    \renewcommand{\cftlottitlefont}{\Large\bfseries\sffamily}
+    \listoftables
+    \addcontentsline{toc}{section}{Spis tablic}
+    \newpage
+    %powrót do czerwonego koloru dla dalszych odnośników (spis literatury, przy włączonym pokazywaniu numerów stron, do których odnoszą się poszczególne pozycje)
+    \hypersetup{linkcolor=red}
+
+    %załączniki
+    \newpage
+    \appendix
+    \renewcommand{\appendixtocname}{Załączniki}
+    \renewcommand{\appendixpagename}{~\vspace{8cm} \begin{center}Załączniki\end{center}\newpage}
+    \thispagestyle{empty}
+    \addappheadtotoc
+    \appendixpage
+    %\input{zalaczniki/tekstowe/schematSlave.tex}
+\end{document}

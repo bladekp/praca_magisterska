@@ -1,0 +1,86 @@
+% ------------------------------------------------------------------------
+% STRONA TYTUŁOWA
+% ------------------------------------------------------------------------
+
+\def\uczelnia#1{\gdef\@uczelnia{#1}}
+\def\instytut#1{\gdef\@instytut{#1}}
+\def\rok#1{\gdef\@rok{#1}}
+\def\promotor#1{\gdef\@promotor{#1}}
+\def\praca#1{\gdef\@praca{#1}}
+
+% -----------------------------------------
+% Zmienna typu prawda/fałsz     wartość domyślna
+\newif\ifdraft@mode             \draft@modefalse
+% -----------------------------------------
+
+\def\draft{
+    \draft@modetrue
+}
+
+\def\stronatytulowa{
+
+    \newcommand*{\tmpthesisDraftKomunikat}{
+        \begin{array}{c}
+            \\
+            \mbox{\Large UWAGA -- TO JEST DRAFT}\\
+            \\
+            \mbox{\large Wydruk z \today}\\
+            \\
+        \end{array}
+    }
+
+    \vskip0.5in
+
+
+    \begin{center}
+        \textbf{\hyphenpenalty=10000\Large\expandafter{\@uczelnia}}
+    \end{center}
+
+    \begin{center}
+        \large\@instytut \\
+	\textbf{\large{PRACA DYPLOMOWA MAGISTERSKA}} \\
+	\large{na kierunku INFORMATYKA}
+    \end{center}
+
+    \begin{figure}[!th]
+        \begin{center}
+		\includegraphics[width=5.00cm]{zalaczniki/obrazy/zdjecie.jpg} \\
+        	\large{Piotr Błądek}\\
+		\large{Nr ind. 252536}
+	\end{center}
+    \end{figure}
+    
+    \begin{center}
+        \hyphenpenalty=100\Large\sffamily\expandafter{\textbf{\@title}}
+    \end{center}
+
+    \begin{flushleft}
+    	\textbf{Zakres pracy:}
+	\begin{enumerate}
+		\item Koncepcja pomysłu
+		\item Komponenty systemu
+		\item Możliwości systemu
+		\item Wykonanie
+		\item Testy
+	\end{enumerate}
+    \end{flushleft}
+
+    \begin{flushright}
+	\small{(Podpis i pieczątka kierownika zakładu dydaktycznego)}
+    \end{flushright}
+
+    \begin{flushleft}
+        \textbf{\@praca}
+        \@promotor 
+    \end{flushleft}
+
+
+    \begin{flushleft}
+        \textbf{Termin wykonania: 31 sierpnia 2017} \\
+	\small{Praca wykonana i zaliczona pozostaje}\\
+ 	\small{własnością Instytutu i nie będzie} \\
+	\small{zwrócona wykonawcy}
+    \end{flushleft}
+    \newpage
+
+}
