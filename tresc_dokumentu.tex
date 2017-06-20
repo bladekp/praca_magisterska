@@ -1,28 +1,55 @@
 \section{Wstęp}
 \suppressfloats[t]  %żeby obiekt ruchomy (rysunek, tablica, itp.) nie pojawił się u góry tej strony
-
 \subsection{Cel i~zakres pracy}
-
+Skąd pomysł na taki system (Droniada 2017). Sprawdzenie możliwości wykorzystania internetu rzeczy oraz bezzałogowych statków powietrznych przy wspomagniu prowadzenia akcji ratowniczej. Pokazanie czy jest możliwe połączenie tych zagadnień, czy ma to jakąś wartość. Czy system jest zawodny. Czy ratownik z niego korzystający sam może potrzebować pomocy
 \subsection{Konwencja nazewnicza}
-
 \subsection{Wprowadzenie do zagadnienia}
+Komponenty systemu, kontroler lotu, urządzenia odbiorcze, urządzenia nadawcze, programy i aplikacje napisane na rzecz systemu.
 
-\section{Koncepcja techniczna}
-\subsection{Architektura systemu}
+\section{Internet rzeczy}
+\subsection{Koncepcja pomysłu internetu rzeczy}
+Co to jest IoT, w jakim celu został stworzony, co nm daje.
+\subsection{Sprzęt i BLE}
+Z czego składa się IoT, jakich urządzeń używa, czym różni się bluetooth 4.0 od wcześniejszych wersji. Czym charakteryzują się kolejne wersji 4.1, 4.2, 4.3. Co to jest RSSI i jak je wykorzystać do określania pozycji, czy jest dokładne.
+\subsection{Komponenty IoT wykorzystane w tworzonym systemie}
+Beacony, gateway, urządzenia odbiorcze.
 
+\section{Bezzałogowe statki powietrzne}
+\subsection{Czym są UAV}
+Bezzałogowy statek powietrzny, dron– statek powietrzny, który nie wymaga do lotu załogi obecnej na pokładzie oraz nie ma możliwości zabierania pasażerów, pilotowany zdalnie lub wykonujący lot autonomicznie...
+\subsection{Rola UAV w projektowanym systemie}
+Po co UAV, jak będziemy je wykorzystywać, czy nie lepiej skorzystać z czegoś innego.
+\subsection{Autonomiczna misja}
+Jak zaplanować, czy jest możliwa, jakie są obostrzenia, co mogę, a czego nie mogę zrobić w misji autonomicznej.
+\subsection{Bezpieczeństwo stosowania UAV w misji ratunkowej}
+Czy nie stanie się tak że trzeba będzie ratować ratownika, na co trzeba uważać, jak trzeba się oznaczyć, o czym należy pamiętać.
+
+\section{Koncepcja techniczna systemu}
+\subsection{Architektura tworzonego systemu}
+Komponenty systemu, podział odpowiedzialności pomiędzy sprzęt i ludzi, protokoły pomiędzy urządzeniami, fale radiowe, zakłócenia...
 \subsection{Schemat blokowy rozwiązania}
-\subsubsection{Ogólny schemat systemu}
-
-\subsection{Algorytmy pracy}
-
-\subsection{Bezpieczeństwo}
-
+\subsection{Algorytm pracy}
+Co po kolei się włącza, kto za co odpowiada i w którym momencie należy coś wyzwolić, pod jakimi warunkami, kto to ma zrobić.
+\subsection{Podłączenie wielu statków w jeden system}
+Czy jest możliwe, czy jest bezpieczne, jak nimi sterować, czy się wzajemnie nie zakłócają
+\subsection{Sterowanie autonomiczne}
+Jak to robić, jak unikać kolizji, jak plaować misje
+\subsection{Bezpieczeństwo użytkowania}
+O czym powienien pamiętać ratownik tak żeby sam nie potrzebował pomocy
 \subsection{Aspekty mechaniczne systemu}
 
+\section{Problemy i próba ich rozwiązania}
+\subsection{Krótki czas lotu UAV}
+\subsection{Zawodność linku telemetrycznego}
+\subsection{Wrażliwość systemu na sytuacje wyjątkowe}
+\subsection{Problemy sprzętowe}
+
 \section{Testy systemu}
+Loty autonomiczne, wyznaczanie charakterystyk siły sygnału bluetooth...
+
+\section{Konkurs}
+Jak nam poszło, jak dokładnie udało się określić pozycje, problemy podczas konkursu, wypadki, wyjątkowe sytuacje. Jak sprawdził się nasz osprzęt.
 
 \section{Podsumowanie}
-
 \subsection{Wnioski}
-
 \subsection{Plany na przyszłość}
