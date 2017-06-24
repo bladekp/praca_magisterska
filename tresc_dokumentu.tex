@@ -1,10 +1,32 @@
 \section{Wstęp}
 \suppressfloats[t]  %żeby obiekt ruchomy (rysunek, tablica, itp.) nie pojawił się u góry tej strony
 \subsection{Cel i~zakres pracy}
-Skąd pomysł na taki system (Droniada 2017). Sprawdzenie możliwości wykorzystania internetu rzeczy oraz bezzałogowych statków powietrznych przy wspomagniu prowadzenia akcji ratowniczej. Pokazanie czy jest możliwe połączenie tych zagadnień, czy ma to jakąś wartość. Czy system jest zawodny.
-\subsection{Konwencja nazewnicza}
+Sprawdzenie możliwosci wykorzystania internetu rzeczy oraz bezzałogowych statków powietrznych przy wspomaganiu prowadzenia akcji ratowniczej. Fizyczne zaprojektowanie i wykonanie kompletnego systemu, cześci działającej na pokładzie statku powietrznym, oraz części diałającej na ziemi. Przetestowanie systemu w warunkach symulowanej akcji ratunkowej. Potwierdzenie lub zaprzeczenie użytecznosci projektowanego systemu, wykazanie wad i zalet systemu.
+\subsection{Tło projektu}
+Pomysł projektu nasunęli organizatorzy konferencji "Parada Robotów 2017" i zarazem konkursu "Droniada" \cite{droniada}. Zadaniem uczestników konkursu było wspomaganie ewakuacji medycznej 10 osób po ataku huraganowego wiatru, przy użyciu bezzałogowców w locie autonomicznym, lub ewentualnie półautonomicznym, oraz tzw. beaconów. W tym dokumencie opiszę system lokkalizowania poszkodowanych osób, który stworzony został na potrzeby wspomnianego wyżej konkursu.
+
+\begin{figure}[!th]
+    \centering
+    \includegraphics[width=15cm]{zalaczniki/obrazy/droniada.jpg}
+    \caption{Nasz zespół na konkursie "Droniada".}
+    \label{fig:triage}
+\end{figure}
+
 \subsection{Wprowadzenie do zagadnienia}
-Komponenty systemu, kontroler lotu, urządzenia odbiorcze, urządzenia nadawcze, programy i aplikacje napisane na rzecz systemu.
+Projektowany system składał się z kliku części. Część pierwsza to poszkodowane w katastrofie osoby, którym ratownicy medyczni przypisują kolejne kolory przy pomocy beaconów, i tak kolor czerwony jest przyporządkowany do osób co do których wymagana jest natychmiastowa ewakuacja, kolorem żółtym oznaczone zostają osoby które wymagają pilnej ewakuacji (mniejszy priorytet), kolorem zielonym osoby które chodzą o własnych siłach, natomiast kolorem czarnym zgony, osoby których ciała zostaną usunięte dopiero po zakończeniu akcji ratowania życia. Jest to tzw. system znaczników Triage \cite{triage}.
+
+\begin{figure}[!th]
+    \centering
+    \includegraphics[width=5cm]{zalaczniki/obrazy/triage_tag.jpg}
+    \caption{Typowy znacznik systemu Triage, używany w akcjach ratowniczych \cite{triage}.}
+    \label{fig:triage}
+\end{figure}
+
+Kolejnym komponentem był statek powietrzny który miał za zadanie zbieranie, nadawanych dookólnie przez beacony, sygnałów i umiejscawianie ich na płaszczyźnie mapy. Taki statek musiał zostać wyposażony w odbiornik bluetooth w wersji conajmniej 4.0 i odpowiednie oprogramowanie.
+
+Ostatnim elementem systemu był system naziemny (ang. \textit{Ground Station}). System ten zbierał zlokalizowane przez statek powietrzny sygnały i wyświetlał je na mapie, dodatkowo aproksymując pozycję realną beacona na mapie.
+
+W kolejnych rozdziałach będę przybliżał powyższe komponenty systemu.
 
 \section{Internet rzeczy}
 \subsection{Koncepcja pomysłu internetu rzeczy}
