@@ -34,10 +34,19 @@ Internet rzeczy (ang. \textit{Internet of Things - IoT}) to idea która zakłada
 
 
 \subsection{Sprzęt i BLE}
-Głównym komponentem systemu jest tzw. beacon, jest to urządzenie małej mocy które, w z góry określonych interwałach czasowych, nadaje dookólnie ramki danych poprzez bluetooth. Ważne jest że beacon ma zaimplementowany bluetooth w wersji 4.0 (lub wyższej) potocznie nazywany BLE (ang. \textit{Bluetooth Low Energy}).
+Głównym komponentem systemu jest tzw. beacon, jest to urządzenie małej mocy które, w z góry określonych interwałach czasowych, nadaje dookólnie ramki danych przy wykorzystaniu protokołu bluetooth. Ważne jest że beacon ma zaimplementowany bluetooth w wersji 4.0 (lub wyższej) potocznie nazywany BLE (ang. \textit{Bluetooth Low Energy}).
 Z czego składa się IoT, jakich urządzeń używa, czym różni się bluetooth 4.0 od wcześniejszych wersji. Czym charakteryzują się kolejne wersji 4.1, 4.2, 4.3. Co to jest RSSI i jak je wykorzystać do określania pozycji, czy jest dokładne.
 \subsection{Komponenty IoT wykorzystane w tworzonym systemie}
-Beacony, gateway, urządzenia odbiorcze.
+W tworzonym systemie wykorzystaliśmy beacony, jako urządzenia którymi oznaczane były osoby poszkodowane. Beacony nadawały dane przy wykorzystaniu protokołu iBeacon\cite{ibeacon}, stworzonego przez firmę Apple, to co nas interesowało to bajty z danymi Major i Minor, oznaczającymi kolejno kolor i numer beacona według specyfikacji poniżej.
+
+\begin{figure}[!th]
+    \centering
+    \includegraphics[width=15cm]{zalaczniki/obrazy/opis-znaczenia-bikonow-konkursowych.jpg}
+    \caption{Kodowanie kolorów na dane Minor i Major.}
+    \label{fig:minormajor}
+\end{figure}
+
+Do odbioru sygnału organizatorzy konkursu proponowali użycie gatewaya produkcji firmy kontakt.io\cite{gateway}, problem był taki że wspomnianego gatewaya trzeba było zintegrować z komputerem pokładowym bezzałogowca, co wydawało nam się być zadaniem trudnym. Postanowiliśmy więc użyć do tego celu raspberrypi w wersji 3, które to wspiera bluetooth 4.0, na raspberrypi zainstalowaliśmy system RTAndroid\cite{rtandroid}, tak żeby możliwe było skorzystanie z API firmy kontakt.io.
 
 \section{Bezzałogowe statki powietrzne}
 \subsection{Czym są UAV}
