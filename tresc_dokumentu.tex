@@ -6,23 +6,30 @@ Sprawdzenie możliwości wykorzystania internetu rzeczy, oraz bezzałogowych sta
 
 \subsection{Tło projektu}
 
-Pomysł projektu nasunęli organizatorzy konferencji "Parada Robotów 2017" i zarazem konkursu "Droniada" \cite{droniada}. Zadaniem uczestników konkursu było wspomaganie ewakuacji medycznej 10 osób po ataku huraganowego wiatru, przy użyciu bezzałogowców w locie autonomicznym, lub ewentualnie półautonomicznym, oraz tzw. beaconów \cite{beacon}. W tym dokumencie opiszę system lokalizowania poszkodowanych osób, który stworzyłem na potrzeby wspomnianego wyżej konkursu. Przejdę od projektu systemu, przez jego implementację, testy, oraz to jak sprawdził się w zadaniu konkursowym, na koniec przedstawię wnioski jakie wyciągnąłem z tego projektu i czy może on mieć jakąkolwiek przyszłość komercyjną, poniżej na zdjęciu znajduje się część naszego zespołu która brała udział w konkursie "Droniada" \ref{fig:zespoldroniada}.
+Pomysł projektu nasunęli organizatorzy konferencji "Parada Robotów 2017" i zarazem konkursu "Droniada" \cite{droniada}. Zadaniem uczestników konkursu było wspomaganie ewakuacji medycznej 10 osób po ataku huraganowego wiatru, przy użyciu bezzałogowców w locie autonomicznym, lub ewentualnie półautonomicznym, oraz tzw. beaconów \cite{beacon}. W tym dokumencie opiszę system lokalizowania poszkodowanych osób, który stworzyłem na potrzeby wspomnianego wyżej konkursu. Przejdę od projektu systemu, przez jego implementację, testy, oraz to jak sprawdził się w zadaniu konkursowym, na koniec przedstawię wnioski jakie wyciągnąłem z tego projektu i czy może on mieć jakąkolwiek przyszłość komercyjną. Poniżej na zdjęciu znajduje się część naszego zespołu która brała udział w konkursie "Droniada", wraz z płatowcem użytym w misji konkursowej \ref{fig:zespoldroniada}.
 
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/droniada.jpg}
-    \caption{Część naszego zespołu na konkursie "Droniada", osoby które brały udział w konkursie głównym.}
+    \caption{Część naszego zespołu na konkursie "Droniada", osoby które brały udział w konkursie głównym}
     \label{fig:zespoldroniada}
 \end{figure}
 
 \subsection{Wprowadzenie do zagadnienia}
 
-Projektowany system składał się z kliku części. Część pierwsza to poszkodowane w katastrofie osoby, a właściwie beacony które ratownicy medyczni wręczyli poszkodowanym osobom, beacony nadają uzgodniony sygnał reprezentujący pewien kolor, i tak kolor czerwony jest przyporządkowany do osób co do których wymagana jest natychmiastowa ewakuacja, kolorem żółtym oznaczone zostają osoby które wymagają pilnej ewakuacji (mniejszy priorytet), kolorem zielonym osoby które chodzą o własnych siłach, natomiast kolorem czarnym zgony, osoby których ciała zostaną usunięte dopiero po zakończeniu akcji ratowania życia. Jest to tzw. system znaczników Triage \cite{triage}, rysunek \ref{fig:triage} przedstawia przykładowy, papierowy, używany przez ratowników znacznik systemu Triage. Moim zadaniem jest próba udowodnienia że taki papierowy znacznik można zamienić na beacon, który nadając dookolnie zakodowany sygnał pomoże ratownikom w akcji ratunkowej.
+Projektowany system składał się z kliku części, schemat ideowy systemu przedstawia rysunek \ref{fig:schematIdeowy}. Część pierwsza to poszkodowane w katastrofie osoby, a właściwie beacony które ratownicy medyczni wręczyli poszkodowanym osobom, beacony nadają uzgodniony sygnał reprezentujący pewien kolor, i tak kolor czerwony jest przyporządkowany do osób co do których wymagana jest natychmiastowa ewakuacja, kolorem żółtym oznaczone zostają osoby, które wymagają pilnej ewakuacji (mniejszy priorytet), kolorem zielonym osoby które chodzą o własnych siłach, natomiast kolorem czarnym zgony, osoby których ciała zostaną usunięte dopiero po zakończeniu akcji ratowania życia. Jest to tzw. system znaczników Triage \cite{triage}, rysunek \ref{fig:triage} przedstawia przykładowy, papierowy, używany przez ratowników znacznik systemu Triage. Moim zadaniem jest próba udowodnienia że taki papierowy znacznik można zamienić na beacon, który nadając dookolnie zakodowany sygnał pomoże ratownikom w akcji ratunkowej.
+
+\begin{figure}[!th]
+    \centering
+    \includegraphics[width=15cm]{zalaczniki/obrazy/schemat_ideowy.png}
+    \caption{Schemat ideowy systemu, widać na nim wszystkie elementy systemu, począwszy od poszkodowanych, przez drony i ich operatorów, a skończywszy na wszystkich elementach stacji naziemnej i analitykach zebranych danych}
+    \label{fig:schematIdeowy}
+\end{figure}
 
 \begin{figure}[!th]
     \centering
     \includegraphics[width=5cm]{zalaczniki/obrazy/triage_tag.jpg}
-    \caption{Typowy znacznik systemu Triage, używany w akcjach ratowniczych \cite{triage}.}
+    \caption{Typowy znacznik systemu Triage, używany w akcjach ratowniczych \cite{triage}}
     \label{fig:triage}
 \end{figure}
 
@@ -35,7 +42,7 @@ Ogólny diagram BPMN mojego rozwiązania przedstawia rysunek \ref{fig:diagramogo
 \begin{figure}[!th]
     \centering
     \includegraphics[width=12.8cm]{zalaczniki/obrazy/diagram_ogolny.png}
-    \caption{Ogólny diagram BPMN przepływu danych w systemie.}
+    \caption{Ogólny diagram BPMN przepływu danych w systemie}
     \label{fig:diagramogolny}
 \end{figure}
 
@@ -45,7 +52,7 @@ Ogólny diagram BPMN mojego rozwiązania przedstawia rysunek \ref{fig:diagramogo
 
 Internet rzeczy (ang. \textit{Internet of Things - IoT}) to idea która zakłada że wszystko można podłączyć do sieci internet \cite{iot}, wszystko to znaczy pojazd, budynek i inne rzeczy wyposażone w elektroniczny system wbudowany z sensorami, aktorami oraz interfejs sieciowy, dzięki czemu możliwa jest wymiana danych. 
 
-Podstawowym celem idei internetu rzeczy jest stworzenie inteligentnych rzeczy, budynków, miast itp. Takie inteligentne rzeczy połączone w sieci, mogą dać ludzkości możliwość nieustannego monitorowania zmieniających się warunków i przystosowywania tych inteligentnych rzeczy do wymagań użytkowników. Dla przykładu sieć czujników które zbierają dane pogodowe takie jak temperatura, ciśnienie, wysokość poziomu rzek itp. mogłaby w czasie rzeczywistym wykrywać anomalie i sama na nie reagować. Taka szybka reakcja na zagrożenie, znacząco zwiększa szanse na uratowanie ludzkiego życia i zmniejsza straty materialne.
+Podstawowym celem idei internetu rzeczy jest stworzenie inteligentnych rzeczy, budynków, miast itp. Takie inteligentne rzeczy połączone w sieci, mogą dać ludzkości możliwość nieustannego monitorowania zmieniających się warunków i przystosowywania tych inteligentnych rzeczy do wymagań użytkowników. Dla przykładu sieć czujników, które zbierają dane pogodowe takie jak temperatura, ciśnienie, wysokość poziomu rzek itp. mogłaby w czasie rzeczywistym wykrywać anomalie i sama na nie reagować. Taka szybka reakcja na zagrożenie, znacząco zwiększa szanse na uratowanie ludzkiego życia i zmniejsza straty materialne.
 
 \subsection{Infrastruktura, sprzęt i BLE \cite{infrastrukturaiot}}
 
@@ -88,12 +95,12 @@ W tworzonym systemie wykorzystaliśmy beacony, jako urządzenia którymi oznacza
     \label{tab:minormajor}
 \end{tablica}
 
-Do odbioru sygnału beaconów, organizatorzy konkursu proponowali użycie gatewaya produkcji firmy kontakt.io \cite{gateway}, problem był taki że wspomnianego gatewaya trzeba było zintegrować z komputerem pokładowym bezzałogowca, co wydawało się być zadaniem trudnym, ze względu na to że gateway był wyposażony w interfejsy głównie bezprzewodowe, co mijało się z celem przy kilkucentymetrowych odległościach. Postanowiłem więc użyć do tego celu komputera Raspberry Pi w wersji 3 model B \ref{fig:raspberrypi3} \cite{raspberrypimodelscomparison}, który to wspiera bluetooth 4.1, jest stosunkowo małych rozmiarów ($56,5 mm$ x $85,6 mm$ x $17 mm$), niewielkiej masy ($45g$), dodatkowo jest dość tani, wszystkie te cechy idealnie pasują do urządzenia, które można podłączyć do bezzałogowego statku powietrznego. Na Raspberry Pi zainstalowałem system RTAndroid\cite{rtandroid}, tak żeby możliwe było skorzystanie z API ułatwiającego komunikację pomiędzy beaconami i odbiornikami, utrzymywanego przez firmę kontakt.io, dzięki temu API pisanie aplikacji odbierającej dane było o wiele prostsze.
+Do odbioru sygnału beaconów, organizatorzy konkursu proponowali użycie gatewaya produkcji firmy kontakt.io \cite{gateway}. Problem był taki że wspomnianego gatewaya trzeba było zintegrować z komputerem pokładowym bezzałogowca, co wydawało się być zadaniem trudnym, ze względu na to że gateway był wyposażony w interfejsy głównie bezprzewodowe, co mijało się z celem przy kilkucentymetrowych odległościach. Postanowiłem więc użyć do tego celu komputera Raspberry Pi w wersji 3 model B \ref{fig:raspberrypi3} \cite{raspberrypimodelscomparison}, który to wspiera bluetooth 4.1, jest stosunkowo małych rozmiarów ($56,5 mm$ x $85,6 mm$ x $17 mm$), niewielkiej masy ($45g$), dodatkowo jest dość tani, wszystkie te cechy idealnie pasują do urządzenia, które można podłączyć do bezzałogowego statku powietrznego. Na Raspberry Pi zainstalowałem system RTAndroid\cite{rtandroid}, tak żeby możliwe było skorzystanie z API ułatwiającego komunikację pomiędzy beaconami i odbiornikami, utrzymywanego przez firmę kontakt.io, dzięki temu API pisanie aplikacji odbierającej dane było o wiele prostsze.
 
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/raspberrypi3.jpg}
-    \caption{Komputer Raspberry Pi 3 Model B, użyty w moim projekcie w charakterze odbiornika bluetooth danych z beaconów.}
+    \caption{Komputer Raspberry Pi 3 Model B, użyty w moim projekcie w charakterze odbiornika bluetooth danych z beaconów}
     \label{fig:raspberrypi3}
 \end{figure}
 
@@ -106,14 +113,14 @@ Bezzałogowe statki powietrzne, UAV (ang. \textit{Unmanned Aerial Vehicle}) poto
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/skyhunter.jpg}
-    \caption{Nasz płatowiec, na bazie kadłuba skyhunter, podczas wykonywania misji konkursowej.}
+    \caption{Nasz płatowiec, na bazie kadłuba skyhunter, podczas wykonywania misji konkursowej}
     \label{fig:skyhunter}
 \end{figure}
 
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/dron_czarny.jpg}
-    \caption{Nasz czterowirnikowiec, zbudowany od podstaw, wyposażony w kontroler lotu Pixhawk.}
+    \caption{Nasz czterowirnikowiec, zbudowany od podstaw, wyposażony w kontroler lotu Pixhawk}
     \label{fig:dronczarny}
 \end{figure}
 
@@ -125,18 +132,18 @@ Zadaniem statków powietrznych, które wykorzystaliśmy w projekcie było znalez
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/teren.png}
-    \caption{Mapa terenu w obrębie którego mogły znajdować się beacony konkursowe, pomarańczową linią wyznaczona jest granica zewnętrzna terenu.}
+    \caption{Mapa terenu w obrębie którego mogły znajdować się beacony konkursowe, pomarańczową linią wyznaczona jest granica zewnętrzna terenu}
     \label{fig:teren}
 \end{figure}
 
-\subsection{Autonomiczna misja}
+\subsection{Misja autonomiczna}
 
-Jednym z kryteriów oceny stosowanym przez jury konkursowe, było wykonanie misji w trybie autonomicznym, to znaczy że statkami powinien sterować program komputerowy, nie człowiek. Planowanie takiej misji nie jest większym problemem, jako że stosowany przez nas kontroler lotu, Pixhawk, miał możliwość zaprogramowania mu takiej właśnie misji, planowanie misji polega na podaniu programowi punktu startu, punktu końca, oraz punktów pośrednich z wysokościami barometrycznymi, czyli wysokościami nad poziomem gruntu, na jakich ma się odbywać misja, przykład takiej misji znajduje się na rysunku \ref{fig:misja}. My wykonywaliśmy misję w trybie częściowo autonomicznym a częściowo manualnym, płatowiec miał wgraną misję, natomiast czterowirnikowce były sterowane przez operatorów. Początkowo były plany wykonania całej misji autonomiczne, byłoby to możliwe przy wykorzystaniu narzędzia dronekit \cite{dronekit}, które to udostępnia wygodny interfejs programistyczny ułatwiający sterowanie statkami powietrznymi. Wymagałoby to jednak ode mnie napisania programu, który w odpowiedzi na znalezienie beacona przez płatowiec, wysyłałby w odpowiednie miejsce czterowirnikowiec w celu dokładniejszego zbadania pozycji beacona. Było to możliwe, ale bardzo trudne, ponieważ i tak miałem sporo pracy z innymi komponentami systemu, porzuciłem tą część projektu na samym początku. Program taki wymagałby ponadprzeciętnej obsługi sytuacji wyjątkowych, które przy takich misjach pojawiają się bardzo często (mocniejszy podmuch wiatru, przeszkoda statyczna na przykład drzewo, przeszkoda dynamiczna na przykład człowiek lub ptak) a to z kolei wymagałoby setek godzin testów i dodatkowego oprzyrządowania statku powietrznego (czujniki zbliżeniowe, zwiększenie widoczności poprzez dodatkowe lampki i ewentualne sygnały dźwiękowe w celu ostrzeżenia ludzi i odstraszenia ptaków). W rezultacie takiego programu sterującego czterowirnikowcem, nie otrzymalibyśmy niestety niczego lepszego niż jest nam w stanie zapewnić operator, żeby program przerósł operatora w tej kwestii potrzebne byłoby tysiące godzin testów, których nie byliśmy w stanie zapewnić.
+Jednym z kryteriów oceny stosowanym przez jury konkursowe, było wykonanie misji w trybie autonomicznym, to znaczy że statkami powinien sterować program komputerowy, nie człowiek. Planowanie takiej misji nie jest większym problemem, jako że stosowany przez nas kontroler lotu, Pixhawk, miał możliwość zaprogramowania mu takiej właśnie misji, planowanie misji polega na podaniu programowi punktu startu, punktu końca, oraz punktów pośrednich z wysokościami barometrycznymi, czyli wysokościami nad poziomem gruntu, na jakich ma się odbywać misja. Przykład takiej misji znajduje się na rysunku \ref{fig:misja}. My wykonywaliśmy misję w trybie częściowo autonomicznym a częściowo manualnym, płatowiec miał wgraną misję, natomiast czterowirnikowce były sterowane przez operatorów. Początkowo były plany wykonania całej misji autonomiczne, byłoby to możliwe przy wykorzystaniu narzędzia dronekit \cite{dronekit}, które to udostępnia wygodny interfejs programistyczny ułatwiający sterowanie statkami powietrznymi. Wymagałoby to jednak ode mnie napisania programu, który w odpowiedzi na znalezienie beacona przez płatowiec, wysyłałby w odpowiednie miejsce czterowirnikowiec w celu dokładniejszego zbadania pozycji beacona. Było to możliwe, ale bardzo trudne, ponieważ i tak miałem sporo pracy z innymi komponentami systemu, porzuciłem tą część projektu na samym początku. Program taki wymagałby ponadprzeciętnej obsługi sytuacji wyjątkowych, które przy takich misjach pojawiają się bardzo często (mocniejszy podmuch wiatru, przeszkoda statyczna na przykład drzewo, przeszkoda dynamiczna na przykład człowiek lub ptak) a to z kolei wymagałoby setek godzin testów i dodatkowego oprzyrządowania statku powietrznego (czujniki zbliżeniowe, zwiększenie widoczności poprzez dodatkowe lampki i ewentualne sygnały dźwiękowe w celu ostrzeżenia ludzi i odstraszenia ptaków). W rezultacie takiego programu sterującego czterowirnikowcem, nie otrzymalibyśmy niestety niczego lepszego niż jest nam w stanie zapewnić operator, żeby program przerósł operatora w tej kwestii potrzebne byłoby tysiące godzin testów, których nie byliśmy w stanie zapewnić.
 
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/misja.jpg}
-    \caption{Przykład misji autonomicznej w programie Mission Planner.}
+    \caption{Przykład misji autonomicznej w programie Mission Planner}
     \label{fig:misja}
 \end{figure}
 
@@ -146,18 +153,18 @@ Może się niestety tak zdarzyć że w misji ratunkowej ucierpi sam ratownik, al
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/ploniedron1.jpg}
-    \caption{Dron jednej z drużyn spłonął na zawodach.}
+    \caption{Dron jednej z drużyn spłonął na zawodach}
     \label{fig:ploniedron1}
 \end{figure}
 
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/ploniedron2.jpg}
-    \caption{To co zostało z drona po pożarze baterii.}
+    \caption{To co zostało z drona po pożarze baterii}
     \label{fig:ploniedron2}
 \end{figure}
 
-Dużą wagę trzeba przyłożyć do bezpieczeństwa samego systemu, po to żeby to ratownik ratował, a żeby sam nie potrzebował pomocy. Rynek dronowy to stosunkowo nowa dziedzina i jest jeszcze dużo do zrobienia jeżeli chodzi o bezpieczeństwo, które często odkładane jest na dalszy plan, a w konsekwencji w ogóle pomijane przy projektowaniu systemów. Należy zadbać o to żeby operatorzy dronów byli dobrze widoczni, na przykład powinni mieć na sobie kamizelki w jaakrawym kolorze. Sprzęt powinien być sprawdzony przed startem, przy pomocy tzw. checklisty, gdyby drużyna której spłonął dron miała taką checklistę, może nic by się nie stało. Ważne jest też żeby operator miał ważne świadectwo kwalifikacji UAVO. Ale najważniejszy jest sam system, w dronie który spłonął prawdopodobnie brakowało systemu ostrzegania przed przegrzaniem baterii, gdyby taki system zadziałał, prawdopodobnie nic by się nie stało, drużyna nie straciłaby drona, nie doszłoby do niebezpiecznej sytuacji.
+Dużą wagę trzeba przyłożyć do bezpieczeństwa samego systemu, po to żeby to ratownik ratował, a żeby sam nie potrzebował pomocy. Rynek dronowy to stosunkowo nowa dziedzina i jest jeszcze dużo do zrobienia jeżeli chodzi o bezpieczeństwo, które często odkładane jest na dalszy plan, a w konsekwencji w ogóle pomijane przy projektowaniu systemów. Należy zadbać o to żeby operatorzy dronów byli dobrze widoczni, na przykład powinni mieć na sobie kamizelki w jaakrawym kolorze. Sprzęt powinien być sprawdzony przed startem, przy pomocy tzw. checklisty, gdyby drużyna której spłonął dron miała taką checklistę, może nic by się nie stało. Ważne jest też żeby operator miał ważne świadectwo kwalifikacji UAVO. Ale najważniejszy jest sam system. W dronie który spłonął prawdopodobnie brakowało systemu ostrzegania przed przegrzaniem baterii, gdyby taki system zadziałał, prawdopodobnie nic by się nie stało, drużyna nie straciłaby drona, nie doszłoby do niebezpiecznej sytuacji.
 
 \section{Koncepcja techniczna systemu}
 
@@ -166,20 +173,20 @@ Na rysunku \ref{fig:schematblokowy} znajduje się schemat blokowy zaproponowaneg
 \begin{figure}[!th]
     \centering
     \includegraphics[width=14cm]{zalaczniki/obrazy/schemat_ogolny.png}
-    \caption{Schemat blokowy systemu.}
+    \caption{Schemat blokowy systemu}
     \label{fig:schematblokowy}
 \end{figure}
 
-Stacja naziemna, to komputer z zainstalowanym oprogramowaniem i modułami telemetrycznymi, do odbierania komunikatów ze statków powietrznych. Moduły telemetryczne nie bez powodu pracują na częstotliwości $433 MHz$, jest to bowiem częstotliwość na użytkowanie której nie potrzebne jest zezwolenie, według rozporządzenia Urzędu Komunikacji Elektronicznej \cite{rozporzadzenieuke}. Stacja naziemna niekoniecznie jest miejscem przy którym siedzi operator systemu. System został zaprojektowany w architekturze klient-serwer, gdzie funkcje klientów może pełnić dowolne urządzenie, które na dostęp sieciowy do serwera, przy czym nasz serwer znajdował się w bezpiecznym pomieszczeniu, daleko od miejsca wykonywania misji, podczas gdy my przy pomocy klientów w postaci różnych urządzeń zasilaliśmy serwer danymi, a przy pomocy innych klientów dane z serwera były pobierane i prezentowane operatorowi w wygodnej i zrozumiałej dla niego postaci, której przykład stanowi rysunek \ref{fig:klient}.
+Stacja naziemna, to komputer z zainstalowanym oprogramowaniem i modułami telemetrycznymi, do odbierania komunikatów ze statków powietrznych. Moduły telemetryczne nie bez powodu pracują na częstotliwości $433 MHz$, jest to bowiem częstotliwość na użytkowanie której nie potrzebne jest zezwolenie, według rozporządzenia Urzędu Komunikacji Elektronicznej \cite{rozporzadzenieuke}. Stacja naziemna niekoniecznie jest miejscem przy którym siedzi operator systemu. System został zaprojektowany w architekturze klient-serwer, gdzie funkcje klientów może pełnić dowolne urządzenie, które ma dostęp sieciowy do serwera, przy czym nasz serwer znajdował się w bezpiecznym pomieszczeniu, daleko od miejsca wykonywania misji, podczas gdy my przy pomocy klientów w postaci różnych urządzeń zasilaliśmy serwer danymi, a przy pomocy innych klientów dane z serwera były pobierane i prezentowane operatorowi w wygodnej i zrozumiałej dla niego postaci, której przykład stanowi rysunek \ref{fig:klient}.
 
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/klient.png}
-    \caption{Widok ekranu operatora systemu.}
+    \caption{Widok ekranu operatora systemu, w centralnym miejscu mapa z zaznaczoną trasą przelotu, próbkami znalezionego sygnału, oraz wyznaczoną aproksymacją}
     \label{fig:klient}
 \end{figure}
 
-Na rysunku widzimy dokładnie to co widzi operator systemu, zaprezentowany zrzut pochodzi z testów systemu przeprowadzanych jeszcze przed zawodami. Niebieska linia to trasa przelotu statku powietrznego, użytego do testu. Żółte kropki to próbki sygnału jakie udało się zebrać, na kropkach pokazana jest siła sygnału (RSSI), oraz numer beacona w kolejności (w tym wypadku numer 1). Żółte okręgi wyznaczają, gdzie prawdopodobnie może znajdować się beacon (im słabszy sygnał tym większy okrąg, moja aproksymacja działa podobnie jak ta która działa w systemie GPS, oczywiście moja jest bardziej toporna i prosta). Tam gdzie żółte okręgi się przecinają stawiamy granatowy punkt, ale nie zawsze, wybieramy tylko te punkty które są najbliżej prawdopodobnego rozwiązania, w końcu pomarańczowy punkt stanowi rozwiązanie aproksymacji. W przedstawionym przykładzie system pomylił się około 2 metry na południe, co mogło być wynikiem dokładności systemu GPS i małej ilości próbek sygnału w zaprezentowanym przykładzie.
+Na rysunku widzimy dokładnie to co widzi operator systemu, zaprezentowany zrzut pochodzi z testów systemu przeprowadzanych jeszcze przed zawodami. Niebieska linia to trasa przelotu statku powietrznego, użytego do testu. Żółte kropki to próbki sygnału jakie udało się zebrać. Na kropkach pokazana jest siła sygnału (RSSI), oraz numer beacona w kolejności (w tym wypadku numer 1). Żółte okręgi wyznaczają, gdzie prawdopodobnie może znajdować się beacon (im słabszy sygnał tym większy okrąg, moja aproksymacja działa podobnie jak ta która działa w systemie GPS). Tam gdzie żółte okręgi się przecinają stawiamy granatowy punkt, ale nie zawsze, wybieramy tylko te punkty które są najbliżej prawdopodobnego rozwiązania, w końcu pomarańczowy punkt stanowi rozwiązanie aproksymacji. W przedstawionym przykładzie system pomylił się około 2 metry na południe, co mogło być wynikiem dokładności systemu GPS i małej ilości próbek sygnału w zaprezentowanym przykładzie.
 
 Dodatkowo operator, po prawej stronie ekranu, ma możliwość włączenia lub wyłączenia ścieżek pojazdów, oraz poszczególnych beaconów, co może być przydatne w przypadku dużej ilości zebranych danych. Na górze jest też możliwość wybrania z systemu danych, od konkretnego momentu w czasie, na przykład możemy wybrać tylko punkty, które zostały utworzone dzisiaj po godzinie 14:00, opcja ta była przydatna podczas przeprowadzania testów.
 
@@ -188,7 +195,7 @@ Wracając do schematu blokowego, kolejnym jego elementem są statki powietrzne, 
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/phantom3.jpg}
-	\caption{Komercyjny dron Phantom 3, użyty przez nas w misji.}
+	\caption{Komercyjny dron Phantom 3, użyty przez nas w misji}
     \label{fig:phantom}
 \end{figure}
 
@@ -236,7 +243,7 @@ Jeden dron często używa do komunikacji z ziemią trzech a nawet czterech i wi�
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/phantom_czestotliwosci.png}
-	\caption{Częstotliwości wykorzystywane podczas lotu przez drona Phantom 3 \cite{radiointerference}.}
+	\caption{Częstotliwości wykorzystywane podczas lotu przez drona Phantom 3 \cite{radiointerference}}
     \label{fig:phantomczestotliwosci}
 \end{figure}
 
@@ -256,7 +263,7 @@ Należy również pamiętać o zabezpieczeniu samego sprzętu, do elementów ele
 
 \subsection{Aspekty mechaniczne systemu}
 
-Tu nie będę się szeroko rozpisywał. W systemie który projektowałem większość funkcjonalności była realizowana programowo, nie było elementów ruchomych, a jedyne o co musiałem zadbać, to mocowanie odbiornika sygnału beaconów, do statku powietrznego i zadbanie o to żeby nie uległ zamoczeniu, zostało to zrealizowane przy pomocy specjalnej obudowy do Raspberry Pi. W przypadku płatowca Raspberry Pi zostało zamocowane w kokpicie, obok kontrolera lotu, w przypadku naszego czterowirnikowca, pomiędzy baterią a kontrolerem pokładowym, w przypadku Phantoma nie było zbyt dużo możliwości, jako że wewnątrz jego korpusu nie ma miejsca na nic większego, a na pewno nie na komputer rozmiarów Raspberry Pi, dlatego Raspberry Pi zostało przymocowane do nóżek drona a zewnątrz.
+W systemie który projektowałem większość funkcjonalności była realizowana programowo, nie było elementów ruchomych, a jedyne o co musiałem zadbać, to mocowanie odbiornika sygnału beaconów, do statku powietrznego i zadbanie o to żeby nie uległ zamoczeniu, zostało to zrealizowane przy pomocy specjalnej obudowy do Raspberry Pi. W przypadku płatowca Raspberry Pi zostało zamocowane w kokpicie, obok kontrolera lotu, w przypadku naszego czterowirnikowca, pomiędzy baterią a kontrolerem pokładowym, w przypadku Phantoma nie było zbyt dużo możliwości, jako że wewnątrz jego korpusu nie ma miejsca na nic większego, a na pewno nie na komputer rozmiarów Raspberry Pi, dlatego Raspberry Pi zostało przymocowane do nóżek drona a zewnątrz.
 
 \section{Problemy i próba ich rozwiązania}
 
@@ -303,7 +310,7 @@ Pierwsza sprawa jest taka, że sygnał nadawany przez beacony miał doświadczal
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/schemat_przelotu.png}
-    \caption{Schematy przelotu dla różnych wysokości nad gruntem.}
+    \caption{Schematy przelotu dla różnych wysokości nad gruntem}
     \label{fig:schematprzelotu}
 \end{figure}
 
@@ -311,7 +318,7 @@ Na rysunku widzimy przykładowy obszar który musimy zbadać i dwie proponowane 
 
 \section{Testy i misja konkursowa}
 
-Testy pojedynczych modułów przeprowadzane były na bieżąco, testów integracyjnych było jednak stosunkowo mało, ze względów logistycznych, ciężko znaleźć odpowiednie miejsce do latania, trzeba zabierać ze sobą dużo sprzętu. Tak na prawdę pierwszym prawdziwym sprawdzianem z wykonania misji była misja konkursowa. Poszła nam ona całkiem dobrze, nie wystrzegliśmy się jednak błędów, wylecieliśmy poza dozwolony obszar, nie udało nam się znaleźć jednego beacona, a dokładność naszych pomiarów pozostawiała wiele do życzenia. Dodatkowo aplikacja złapała zadyszkę w trakcie wykonywania misji i przez jakiś czas musieliśmy sobie radzić ze sporym opóźnieniem w czasie odpowiedzi. 
+Testy pojedynczych modułów przeprowadzane były na bieżąco, testów integracyjnych było jednak stosunkowo mało, ze względów logistycznych, ciężko znaleźć odpowiednie miejsce do latania, trzeba zabierać ze sobą dużo sprzętu. Tak na prawdę pierwszym prawdziwym sprawdzianem z wykonania misji była misja konkursowa. Poszła nam ona całkiem dobrze, nie wystrzegliśmy się jednak błędów, wylecieliśmy poza dozwolony obszar, nie udało nam się znaleźć jednego beacona, a dokładność naszych pomiarów pozostawiała wiele do życzenia. Dodatkowo aplikacja przez jakiś czas odpowiadała ze sporym opóźnieniem i musieliśmy sobie z tym radzić, przyczyny opóźnienia nie udało mi się ustalić. 
 
 Aplikacja do aproksymacji musiała znać przybliżoną charakterystykę sygnału beaconów, testy takie zostały przez nas wykonane, a wyniki zaimplementowane w funkcji aproksymującej. Aproksymacja działała całkiem dobrze, nie dało się jednak zaufać jej w pełni, operator systemu musiał na bieżąco weryfikować dane, pojawiające się na pulpicie systemu.
 
@@ -320,7 +327,7 @@ Na pierwszym obrazku w tym rozdziale \ref{fig:beaconykonkursowe} widzimy miejsca
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/beacony_konkursowe.png}
-    \caption{Pozycje beaconów rozmieszczonych przez organizatorów podczas konkursu.}
+    \caption{Pozycje beaconów rozmieszczonych przez organizatorów podczas konkursu}
     \label{fig:beaconykonkursowe}
 \end{figure}
 
@@ -329,7 +336,7 @@ Kolejne zdjęcie \ref{fig:wskazanieczerwone} przedstawia, jak wyglądało wskaza
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/wskazanie_czerwone.png}
-    \caption{Wskazanie naszego systemu na miejsca położenia beaconów czerownych.}
+    \caption{Wskazanie naszego systemu na miejsca położenia beaconów czerownych}
     \label{fig:wskazanieczerwone}
 \end{figure}
 
@@ -338,7 +345,7 @@ Następny rysunek \ref{fig:wskazaniezolte} pokazuje wskazanie na żółte beacon
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/wskazanie_zolte.png}
-    \caption{Wskazanie naszego systemu na miejsca położenia beaconów żółtych.}
+    \caption{Wskazanie naszego systemu na miejsca położenia beaconów żółtych}
     \label{fig:wskazaniezolte}
 \end{figure}
 
@@ -347,7 +354,7 @@ Ostatnie są beacony zielone, czarnego niestety nie znaleźliśmy, na rysunku \r
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/wskazanie_zielone.png}
-    \caption{Wskazanie naszego systemu na miejsca położenia beaconów zielonych.}
+    \caption{Wskazanie naszego systemu na miejsca położenia beaconów zielonych}
     \label{fig:wskazaniezielone}
 \end{figure}
 
@@ -356,7 +363,7 @@ Na ostatnim rysunku \ref{fig:beaconykonkursowenasze} mamy porównanie tego gdzie
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/beacony_konkursowe_nasze.png}
-    \caption{Nałożenie naszych szacunkowych pozycji na obraz z pozycjami realnymi.}
+    \caption{Nałożenie naszych szacunkowych pozycji na obraz z pozycjami realnymi}
     \label{fig:beaconykonkursowenasze}
 \end{figure}
 
@@ -396,7 +403,7 @@ Planów na przyszłość z tym konkretnym projektem nie mam, wydaje mi się że 
 \begin{figure}[!th]
     \centering
     \includegraphics[width=15cm]{zalaczniki/obrazy/beacon_card.png}
-    \caption{Beacon w postaci karty, rozmiarowo zlbiżony do karty kredytowej.}
+    \caption{Beacon w postaci karty, rozmiarowo zlbiżony do karty kredytowej}
     \label{fig:beaconcard}
 \end{figure}
 
